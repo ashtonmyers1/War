@@ -1,0 +1,61 @@
+html, body {
+  font-size: 16px;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.players {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 2rem;
+}
+
+.score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hand {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttons {
+  margin: 3rem;
+}
+
+.btn {
+  width: 6rem;
+  height: 4rem;
+  background-color: rgb(193, 157, 152);
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+img {
+  max-width: 60%;
+}
+
+p {
+  margin: 0.5rem;
+  margin-top:2rem;
+}
+
+h2 {
+  margin: 0.25rem;
+}
+
