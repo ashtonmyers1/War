@@ -1,85 +1,11 @@
 class Game {
 
-  isFirstHand;
-
   constructor() {
-    this.isFirstHand = true;
-    this.temp = [];
+    this.playerTemp = [];
+    this.computerTemp = [];
     this.player = new Player();
     this.computer = new Player();
     this.cardDeck = new Deck();
-  }
-
-  play() {
-    // play cards
-    let card1 = this.player.playCard();
-    let card2 = this.computer.playCard();
-
-    return [card1, card2];
-    if (card1.compareRank(card2) > 0) {
-      //player has won round, receives both cards
-      this.player.receiveCard(card1);
-      this.player.receiveCard(card2);
-      this.computer.loseCard(card2);
-    } 
-    
-    else if(card1.compareRank(card2) < 0) {
-      //computer has won round, receives both cards
-      this.computer.receiveCard(card2);
-      this.computer.receiveCard(card1);
-      this.computer.loseCard(card1);
-    }
-
-    else {
-      //war
-
-      //place 3 cards face down and store in temp array
-      
-    }
-
-  }
-
-  playWar() {
-    // remove 4 cards from hand and store in temp
-    while (!isEmpty() && index < 4) {
-        this.temp.push() = this.hand.shift();
-        playCard()
-    }
-}
-
-  isFirstHand() {
-
-  }
-
-  battle() {
-    this.player.giveCard()
-  }
-  war() {
-
-    
-  }
-
-  winHand() {
-
-  }
-
-  loseHand() {
-
-  }
-
-  tieHand() {
-
-  }
-
-  isGameOver() {
-
-  }
-
-  isNewGame() {
-    //check if this is a new Game
-    if (isFirstHand) {
-      isFirstHand = false;
-    } 
   }
 
   setupNewGame() {
@@ -93,6 +19,103 @@ class Game {
     }
   }
 
+  playHand() {
+    if (this.player.handSize() == 0 || this.computer.handSize() == 0) {
+      this.getWinner();
+    }
 
+    let playerCard = this.player.playCard();
+    let computerCard = this.computer.playCard();
+
+    return [playerCard, computerCard];
+  }
+
+  compareHands(playerCard, computerCard) {
+    
+    if (playerCard.rank > computerCard.rank) {
+      this.player.receiveCard(playerCard);
+      this.player.receiveCard(computerCard);
+    } 
+    
+    else if (playerCard.rank < computerCard.rank) {
+      this.computer.receiveCard(playerCard);
+      this.computer.receiveCard(computerCard);
+    } 
+    
+    else {
+      this.war(playerCard, computerCard);
+    }
+  
+  }
+
+  war(pCard, cCard) {
+
+    // check to see if a player has enough cards for war
+    if (this.isGameOverDuringWar()) {
+      this.getWinner();
+      return;
+    }
+
+    let isEqual = true;
+    
+    do {
+      // store current card in temp array
+      this.playerTemp.push(pCard);
+      this.computerTemp.push(cCard);
+
+      // store 3 face down cards, and 1 face up card in temp array
+      for (let i = 0; i < 3; i++) {
+        this.playerTemp.push(this.player.playCard());
+        this.computerTemp.push(this.computer.playCard());
+
+        console.log("Cards in player temp array: " + this.playerTemp);
+        console.log("Cards in computer temp array: " + this.computerTemp);
+      } 
+
+      // compare last cards in temp array
+      let lastPlayerCard = this.playerTemp[this.playerTemp.length-1];
+      let lastComputerCard = this.computerTemp[this.computerTemp.length-1];
+      
+      if (lastPlayerCard > lastComputerCard) {
+        for (let i = 0; i < lastPlayerCard.length - 1; i++) {
+          this.player.hand.receiveCard(this.playerTemp.pop());
+          this.player.hand.receiveCard(this.computerTemp.pop());
+        }
+
+        isEqual = false;
+      }
+
+      else if (lastPlayerCard < lastComputerCard) {
+        for (let i = 0; i < lastPlayerCard.length - 1; i++) {
+          this.computer.hand.receiveCard(this.playerTemp.pop());
+          this.computer.hand.receiveCard(this.computerTemp.pop());
+        }
+
+        isEqual = false;
+      } 
+      
+    } while (isEqual)
+    
+  }
+
+  isGameOverDuringWar() {
+    if (this.player.handSize() < 3 || this.computer.handSize() < 3) {
+      return true;
+    }  
+
+    return false;
+  }
+
+  getWinner() {
+    if (this.player.handSize() > this.computer.handSize()) {
+      console.log(this.player + "has won the game"); 
+      return this.player;
+    } 
+    
+    else {
+      console.log(this.computer + "has won the game");
+      return this.computer;
+    }
+  }
 
 }

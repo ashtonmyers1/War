@@ -22,7 +22,7 @@
         <h4>Player</h4>
         <div class="hand">
           <h2 id="player-value">0</h2>
-          <h2>Suit</h2>
+          <h2 id="player-suit">Suit</h2>
         </div>
         <div class="score">
           <p>Score</p>
@@ -33,8 +33,8 @@
       <div class="players">
         <h4>Computer</h4>
         <div class="hand">
-          <h2>0</h2>
-          <h2>Suit</h2>
+          <h2 id="computer-value">0</h2>
+          <h2 id="computer-suit">Suit</h2>
         </div>
         <div class="score">
           <p>Score</p>
@@ -57,14 +57,18 @@
 
       //jquery
       $(document).ready(function() {
-        $("#btnBattle").on("click", function() {
-          let test = board.game.play()
-          $("#player-value").text(test[0].value)
+        $("#btnBattle").on("click", function() { 
           
-          //alert(test[0].suit)
-          console.log(test);
-          // get suit and value
-          $()
+          let playRound = board.game.playHand()
+          $("#player-value").text(playRound[0].value);
+          $("#computer-value").text(playRound[1].value);
+          $("#player-suit").text(playRound[0].suit);
+          $("#computer-suit").text(playRound[1].suit);
+          console.log(playRound);
+
+          let exchangeCards = board.game.compareHands(playRound[0].rank, playRound[1].rank);
+
+
         });
       });
 

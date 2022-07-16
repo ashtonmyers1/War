@@ -10,11 +10,15 @@ class Player {
         this.hand.push(card);
     }
 
-    loseCard(card) {
-        this.hand.shift();
-    }
+    // loseCard(card) {
+    //     this.hand.shift();
+    // }
 
     playCard() {
+        if (handIsEmpty()) {
+            return null;
+        }
+
         return this.hand.pop();
     }
 
@@ -34,7 +38,15 @@ class Player {
         this.hand = newHand;
     }
 
-    isEmpty() {
+    handIsEmpty() {
         return this.hand.length == 0;
+    }
+
+    handSize() {
+        return this.hand.length;
+    }
+
+    getCard() {
+        return this.hand.peek();
     }
 }
