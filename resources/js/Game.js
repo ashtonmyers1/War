@@ -17,6 +17,16 @@ class Game {
       this.player.receiveCard(this.cardDeck.deal());
       this.computer.receiveCard(this.cardDeck.deal());
     }
+
+    console.log("Player cards:")
+    for(let i = 0; i < this.player.hand.length; i++) {
+      console.log(this.player.hand[i]);
+    }
+
+    console.log("Computer cards:")
+    for(let i = 0; i < this.computer.hand.length; i++) {
+      console.log(this.computer.hand[i]);
+    }
   }
 
   playHand() {
@@ -24,22 +34,35 @@ class Game {
       this.getWinner();
     }
 
+    console.log("Player card count before: " + this.player.handSize());
+    console.log("Computer card count before: " + this.computer.handSize());
+
     let playerCard = this.player.playCard();
     let computerCard = this.computer.playCard();
+
+    console.log("Player card count after: " + this.player.handSize());
+    console.log("Computer card count after: " + this.computer.handSize());
 
     return [playerCard, computerCard];
   }
 
   compareHands(playerCard, computerCard) {
+    console.log("playerCard rank: " + playerCard.rank + " computerCard rank: " + computerCard.rank);
     
     if (playerCard.rank > computerCard.rank) {
       this.player.receiveCard(playerCard);
       this.player.receiveCard(computerCard);
+
+      console.log("Player card count after turn" + this.player.handSize());
+      console.log("Computer card count after turn" + this.computer.handSize());
     } 
     
     else if (playerCard.rank < computerCard.rank) {
       this.computer.receiveCard(playerCard);
       this.computer.receiveCard(computerCard);
+
+      console.log("Player card count after turn: " + this.player.handSize());
+      console.log("Computer card count after turn: " + this.computer.handSize());
     } 
     
     else {
@@ -50,6 +73,8 @@ class Game {
 
   war(pCard, cCard) {
 
+    console.log("pCard: " + pCard + "cCard: " + cCard);
+    
     // check to see if a player has enough cards for war
     if (this.isGameOverDuringWar()) {
       this.getWinner();
@@ -75,11 +100,17 @@ class Game {
       // compare last cards in temp array
       let lastPlayerCard = this.playerTemp[this.playerTemp.length-1];
       let lastComputerCard = this.computerTemp[this.computerTemp.length-1];
-      
+
+      console.log("Length of player array: " + lastPlayerCard);
+      console.log("Length of computer array: " + lastComputerCard);
+
       if (lastPlayerCard > lastComputerCard) {
         for (let i = 0; i < lastPlayerCard.length - 1; i++) {
           this.player.hand.receiveCard(this.playerTemp.pop());
           this.player.hand.receiveCard(this.computerTemp.pop());
+
+          console.log("Cards in Player's hand array: " + this.player.hand);
+          console.log("Cards in Computer's hand array: " + this.computer.hand);
         }
 
         isEqual = false;
@@ -89,10 +120,21 @@ class Game {
         for (let i = 0; i < lastPlayerCard.length - 1; i++) {
           this.computer.hand.receiveCard(this.playerTemp.pop());
           this.computer.hand.receiveCard(this.computerTemp.pop());
+
+          console.log("Cards in Player's hand array: " + this.player.hand);
+          console.log("Cards in Computer's hand array: " + this.computer.hand);
         }
 
         isEqual = false;
-      } 
+      }
+      
+      else {
+        pCard = this.player.playCard();
+        cCard = this.computer.playCard();
+
+        console.log("New pCard: " + pCard);
+        console.log("New cCard: " + cCard);
+      }
       
     } while (isEqual)
     

@@ -15,7 +15,7 @@ class Player {
     // }
 
     playCard() {
-        if (handIsEmpty()) {
+        if (this.handIsEmpty()) {
             return null;
         }
 

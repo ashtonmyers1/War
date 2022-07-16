@@ -15,7 +15,10 @@ class Deck {
       }
     }
 
-    console.log("Create deck: ", this.deck);
+    console.log("Testing deck initalization: ");
+    for (let i = 0; i < this.deck.length; i++) {
+      console.log(this.deck[i]);
+    }
   }
 
   shuffle() {
@@ -23,15 +26,21 @@ class Deck {
     //Fisher-Yates Shuffle
     let i = this.deck.length;
 
-    while (i != 0) {
+    while (--i > 0) {
       //choose a random remaining element
-      let randomIndex = Math.floor(Math.random() * i)
-      i--;
-
-      //swap random element with current
-      [this.deck[i], this.deck[randomIndex]] = [this.deck[randomIndex], this.deck[i]];
+      let randomIndex = Math.floor(Math.random() * (i + 1));
+      
+      let temp = this.deck[randomIndex];
+      this.deck[randomIndex] = this.deck[i];
+      this.deck[i] = temp; 
     }
-    console.log("Shuffled", this.deck);
+
+    console.log("Testing shuffle: ");
+    for (let index = 0; index < this.deck.length; index++) {
+      console.log(this.deck[index]);
+    }
+
+
     return this.deck;
   }
 

@@ -66,8 +66,8 @@
           $("#computer-suit").text(playRound[1].suit);
           console.log(playRound);
 
-          let exchangeCards = board.game.compareHands(playRound[0].rank, playRound[1].rank);
-
+          let exchangeCards = board.game.compareHands(playRound[0], playRound[1]);
+          // console.log(exchangeCards);
 
         });
       });
