@@ -90,9 +90,9 @@ class Game {
     //   return;
     // }
 
-    let isEqual = true;
+    // let isEqual = true;
     
-    do {
+    // do {
       // store current card in temp array
       this.playerTemp.push(pCard);
       this.computerTemp.push(cCard);
@@ -102,51 +102,47 @@ class Game {
         this.playerTemp.push(this.player.playCard());
         this.computerTemp.push(this.computer.playCard());
       } 
-      console.log('WAR')
+      console.log('WAR');
 
 
       // compare last cards in temp array
       let lastPlayerCard = this.playerTemp.at(-1);
       let lastComputerCard = this.computerTemp.at(-1);
 
-      //console.log("Length of player array: " + this.playerTemp.length);
-      //console.log("Length of computer array: " + this.computerTemp.length);
+      console.log("Length of player array: " + this.playerTemp.length);
+      console.log("Length of computer array: " + this.computerTemp.length);
 
 
       if (lastPlayerCard.rank > lastComputerCard.rank) {
-        for (let i = 0; i < this.playerTemp.length - 1; i++) {
-          this.player.receiveCard(this.playerTemp.pop());
-          this.player.receiveCard(this.computerTemp.pop());
+        this.playerTemp.forEach(card => {
+          this.player.receiveCard(card);
+        })
+        this.computerTemp.forEach(card => {
+          this.player.receiveCard(card);
+        })
 
-          //console.log("Cards in Player's hand array: " + this.player.hand);
-          //console.log("Cards in Computer's hand array: " + this.computer.hand);
-        }
-
-        isEqual = false;
+        // isEqual = false;
       }
 
       else if (lastPlayerCard.rank < lastComputerCard.rank) {
-        for (let i = 0; i < this.computerTemp.length - 1; i++) {
-          this.computer.receiveCard(this.playerTemp.pop());
-          this.computer.receiveCard(this.computerTemp.pop());
+        this.computerTemp.forEach(card => {
+          this.computer.receiveCard(card);
+        })
+        this.playerTemp.forEach(card => {
+          this.computer.receiveCard(card);
+        })
 
-          //console.log("Cards in Player's hand array: " + this.player.hand);
-          //console.log("Cards in Computer's hand array: " + this.computer.hand);
-        }
-
-        isEqual = false;
+        // isEqual = false;
       }
       
       else {
-        pCard = this.player.playCard();
-        cCard = this.computer.playCard();
-
-        //console.log("New pCard: " + pCard);
-        //console.log("New cCard: " + cCard);
+        this.war(lastPlayerCard, lastComputerCard);
+        // pCard = this.player.playCard();
+        // cCard = this.computer.playCard();
       }
 
       //break;
-    } while (isEqual)
+    // } while (isEqual)
     
   }
 
